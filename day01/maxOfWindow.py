@@ -16,7 +16,47 @@ class Solution:
 
         return slidingMax
 
-    def maxWindowV2(self, nums: List[int], size) -> int:
+    def maxWindowV1(self, nums: List[int], size) -> int:
+        slidingMax = []
+
+        if size < len(nums):
+            length = len(nums) - size + 1
+        else:
+            size = len(nums)
+
+        sortedWindow = deque()
+        sortedWindow.append(0)
+
+        for index in range(1, size) :
+            if nums[index] > nums[sortedWindow[0]] :
+                sortedWindow.clear()
+                sortedWindow.append(index)
+            else:
+                while nums[sortedWindow[-1]] < nums[index] :
+                    sortedWindow.pop()
+                sortedWindow.append(index)
+  
+        slidingMax.append(nums[sortedWindow[0]])
+
+        for index in range(size, len(nums)) :
+
+            while len(sortedWindow) > 0 and sortedWindow[0] < (index - size + 1) :
+                sortedWindow.popleft()
+
+            if len(sortedWindow) > 0:
+                if nums[index] > nums[sortedWindow[0]] :
+                    sortedWindow.clear()
+                else :
+                    while len(sortedWindow) > 0 and (sortedWindow[-1] < (index - size + 1) or nums[sortedWindow[-1]] < nums[index]) :
+                        sortedWindow.pop()
+
+            sortedWindow.append(index)
+             
+            slidingMax.append(nums[sortedWindow[0]])
+
+        return slidingMax
+
+    def maxWindowFinal(self, nums: List[int], size) -> int:
         window = []
 
         if size > len(nums):
@@ -42,9 +82,9 @@ class Solution:
             window.append(nums[q[0]])
         
         return window
-    
+
     def callFn(self, nums: List[int], windowSize) -> int:
-        return self.maxWindowV2(nums, windowSize)
+        return self.maxWindowFinal(nums, windowSize)
 
 S = Solution()
 
