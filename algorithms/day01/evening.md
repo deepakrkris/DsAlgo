@@ -1,5 +1,4 @@
 **sliding window pattern**
-
 Given an integer array and a window of size w, find the current maximum value in the window as it slides through the entire array.
 Note: If the window size is greater than the array size, we consider the entire array as a single window.
 
@@ -28,7 +27,6 @@ D)
 
 
 **Minimum Window Subsequence**
-
 Given strings str1 and str2, find the minimum (contiguous) substring sub_str of str1, such that every character of str2 appears in sub_str in the same order as it is present in str2.
 
 If there is no window in str1 that covers all characters in str2, return an empty string.
