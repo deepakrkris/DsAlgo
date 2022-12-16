@@ -57,43 +57,37 @@ class Solution:
 
     # complete sliding window solution
     # backtrace window to find shortest match
-    def moving_window(self, str1, str2) :
-        minLength = 0
+    def min_window(self, str1, str2):
+        indexS1 = 0
+        indexS2 = 0
+        minLength = -1
         minMatch = ""
 
-        windowPtr = 0
-        substrPtr = 0
-        startIndex = 0
+        while indexS1 < len(str1) and indexS2 < len(str2):
+            if str1[indexS1] == str2[indexS2] :
+                indexS2 = indexS2 + 1
+        
+            if indexS2 == len(str2):
+                startIndex = indexS1
+                matchIndex = len(str2) - 1
+                while matchIndex >= 0 :
+                    if str2[matchIndex] == str1[startIndex]:
+                        matchIndex = matchIndex - 1
+                        if matchIndex < 0 :
+                            break
+                    startIndex = startIndex - 1
 
-        def backtrack(windowStart, substr, windowEnd):
-            while windowEnd > windowStart :
-                if str2[substr] == str1[windowEnd] :
-                    substr = substr - 1
-                    if substr < 0 :
-                        return windowEnd
-                windowEnd = windowEnd - 1
-            return windowStart
-
-        while windowPtr < len(str1) :
-            if str1[windowPtr] == str2[substrPtr] :
-                if substrPtr == 0 :
-                    startIndex = windowPtr
-                substrPtr = substrPtr + 1
-
-            if substrPtr == len(str2) :
-                startIndex = backtrack(startIndex, substrPtr - 1, windowPtr)
-
-                if minLength > len(str1[startIndex : windowPtr]) or minLength == 0:
-                    minMatch = str1[startIndex : windowPtr + 1]
+                if minLength > len(str1[startIndex: indexS1 + 1]) or minLength == -1:
+                    minMatch = str1[startIndex: indexS1 + 1]
                     minLength = len(minMatch)
-                substrPtr = 0
+                indexS2 = 0
+            indexS1 = indexS1 + 1
 
-            windowPtr = windowPtr + 1
+        return minMatch
 
-        return (minLength, minMatch)
 S = Solution()
 
 print(S.subsequence("accbgeddee", "bgd"))
 print(S.subsequence("abgebgedde", "bgd"))
-print(S.moving_window("accbgeddee", "bgd"))
-print(S.moving_window("abgebgedde", "bgd"))
+print(S.min_window("accbgeddee", "bgd"))
+print(S.min_window("abgebgedde", "bgd"))
