@@ -1,62 +1,55 @@
 #
 # search in a sorted array with rotation/circular {8,9,1,2,3,4,5,6,7} -> the target is 2, return its position 3
 #
-
 """
 binary search
 logn
 
-8,9,1,2,3,4,5,6,7
+0   1   2   3   4   5   6   7   8
+5   6,  7,  8,  9,  1,  2,  3,  4
 
-l = 8
-r = 7
-
-   p = find_pivot_index(arr)
-   binary_search(0, p) binary_search(p + 1, arr.length)
-
-  M = 8
-  6, 7, 8, 1, 2, 3, 4
-  L     M        R
-
-if M > R  and Target > M :
-
-if M < L  and Target < M :
+if M > R and T < R :
+    move window to right
+if M > R and T > R :
+    move window to left
+if M < R and T < M :
+    move window to left
+if M < R and T > M and T < R :
+    move window to right
+if M < R and T > M and T > R :
+    move window to left
 """
-
 def find_target(arr, target) :
     
     left = 0
     right = len(arr) - 1
-    
-    # 
-    # 6, 7, 8, 1, 2, 3,
-    # 8,9,1,2,3,4,5,6,7
-    # m = 2, l = 8, r = 7 target is 5
-    # 2 < 7 -> the right part is sorted
-    #  if t > m && t < r -> move right else search left
+
     while left <= right :
-        mid = (left + right) // 2
-        
+        mid = (left + right)//2
+ 
         if arr[mid] == target :
-            return True
-        
-        if arr[mid] < arr[right] and target > arr[mid] and target < arr[right] :
-            left = mid + 1
-        else :            
-            if arr[mid] < arr[right] :
-                if target > arr[mid] and target < arr[right] :
-                   left = mid + 1
-                else :
-                    right = mid -1
+            return mid
+        if arr[mid] > arr[right] :
+            if target <= arr[right] :
+                left = mid + 1
             else :
-                if target > arr[left] and target < arr[mid] :
-                    right = mid - 1
-                else :
-                     left = mid + 1
+                right = mid - 1 
+        else :
+            if target < arr[mid] :
+                right = mid - 1
+            elif target <= arr[right] :
+                left = mid + 1
+            else :
+                right = mid - 1
+
+    return -1
+
+test_data = [ [5,  6,  7,  8,  9,  1,  2,  3,  4],
+              [8,  9,  1,  2,  3,  4,  5,  6,  7]
+            ]
 
 
-
-
-
-
-
+for i , t in enumerate(test_data) :
+    print(i + 1, './t', 'test data is ', t)
+    print(find_target(t, 2))
+    print("_" * 30)
