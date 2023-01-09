@@ -44,12 +44,12 @@ def find_target(arr, target) :
 
     return -1
 
-test_data = [ [5,  6,  7,  8,  9,  1,  2,  3,  4],
+test_data = [ [5,  6,  7,  8,  9,  1,  2,  3 ],
               [8,  9,  1,  2,  3,  4,  5,  6,  7]
             ]
 
 
 for i , t in enumerate(test_data) :
     print(i + 1, './t', 'test data is ', t)
-    print(find_target(t, 2))
+    print(find_target(t, 9))
     print("_" * 30)

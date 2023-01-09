@@ -1,0 +1,45 @@
+class Solution:
+    """
+     abcadbe, petpatputpetcatpatdog
+     (pet) patput (pet) catpatdog          
+    => (a) bc (a) dbe
+    a ?
+    b ? 
+    c ?
+    - a
+    d ? 
+    - b
+    e ?
+       similar to sudoku problem (arrangement) , poly time solution does not exist
+    """
+    def wordPatternMatch(self, pattern: str, s: str) -> bool :
+        words = dict()
+
+        return self.assign_words(words, pattern, s)
+
+    def assign_words(self, words, pattern, s) -> bool :
+        print(words, pattern, s)
+        if len(pattern) == 0 and len(s) == 0 :
+            return True
+
+        if len(pattern) == 0 or len(s) == 0 :
+            return False
+
+        for i in range(1, len(s) + 1) :
+            if pattern[0] in words :
+                if s[:i] in words.values() :
+                    if words[pattern[0]] == s[:i] :
+                        return self.assign_words( words, pattern[1:], s[ len(s[:i]) : ])
+            else :
+                if s[:i] not in words.values() :
+                    words[pattern[0]] = s[:i]
+                    if self.assign_words(words, pattern[1:], s[i:]) :
+                        return True
+                    del words[pattern[0]]
+        return False
+
+
+sol = Solution()
+
+print(sol.wordPatternMatch("abab", "redblueredblue"))
+print(sol.wordPatternMatch("aabb", "redredblueblue"))

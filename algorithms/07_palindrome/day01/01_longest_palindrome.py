@@ -19,6 +19,18 @@
 
 """
 
+"""
+    a
+        ab
+           a b a
+    b
+        ba
+           b a b         
+    a 
+        ab
+           a b a
+"""
+
 def longestPalindrome(s: str) -> str:
 
     max_len = 0
@@ -91,3 +103,9 @@ def longestPalindrome_dynamic(s: str) -> str:
 
 print(longestPalindrome_dynamic('ababab'))
 print(longestPalindrome_dynamic('forgeeksskeegfor'))
+
+"""
+    a b a b aaba
+(aba)
+    bab
+"""
